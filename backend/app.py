@@ -12,29 +12,46 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from police_api import PoliceAPI
 from sklearn.preprocessing import StandardScaler
-# import torch
-# from model import Model  
+import gdown
 
+#download model from google drive
+url = "https://drive.google.com/uc?id=1WIr1uPRPlum6qe7tnKFGU5vOzoGt6gok"  
+output = "xgboost_model.json"
+gdown.download(url, output, quiet=False)
+
+db_url = "postgresql://postgres.ieexhdpvusfiwdonnczw:m0v3gu1d3@aws-0-us-east-2.pooler.supabase.com:6543/postgres"
 
 # Load environment variables from .env file 
-load_dotenv()
+# load_dotenv()
+
 app = Flask(__name__)
 CORS(app) 
 
 # connects to postgreSQL database
+# def get_connection():
+#     try:
+#         connection = psycopg2.connect(
+#             host=os.getenv("DB_HOST"),
+#             dbname=os.getenv("DB_NAME"),
+#             user=os.getenv("DB_USER"),
+#             password=os.getenv("DB_PASSWORD"),
+#             port=os.getenv("DB_PORT", 5432)
+#         )
+#         return connection
+#     except Exception as e:
+#         print(f"Database connection failed: {e}")
+#         return None
+
+#connect to postgreSQL database through SUPABASE
 def get_connection():
+    db_url = "postgresql://postgres.ieexhdpvusfiwdonnczw:m0v3gu1d3@aws-0-us-east-2.pooler.supabase.com:6543/postgres" 
     try:
-        connection = psycopg2.connect(
-            host=os.getenv("DB_HOST"),
-            dbname=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            port=os.getenv("DB_PORT", 5432)
-        )
+        connection = psycopg2.connect(db_url)
         return connection
     except Exception as e:
         print(f"Database connection failed: {e}")
         return None
+
 
     
 #retrieves school performance statistics from database, responds in JSON
@@ -313,7 +330,7 @@ def get_prediction():
     X = pd.DataFrame(X)
     # model, scaler are loaded
     model = xgb.XGBRegressor()
-    model.load_model('xgboost3-4_model.json')
+    model.load_model("xgboost_model.json")
     scaler, columns_to_standardise = joblib.load('SC4.pkl')
     X[columns_to_standardise] = scaler.transform(X[columns_to_standardise])
     y_pred = np.expm1(model.predict(X)) 

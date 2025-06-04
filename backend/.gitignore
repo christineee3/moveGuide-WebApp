@@ -35,3 +35,7 @@ dist/
 
 # Pytest cache
 .pytest_cache/
+
+
+#model
+/xgboost_model.json
