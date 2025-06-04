@@ -21,3 +21,17 @@ db.sqlite3
 # Ignore IDE/editor files
 .vscode/
 .idea/
+
+# macOS system file
+.DS_Store
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python build/dist files
+build/
+dist/
+*.egg-info/
+
+# Pytest cache
+.pytest_cache/
