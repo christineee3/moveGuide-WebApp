@@ -249,4 +249,4 @@ cython_debug/
 
 
 #model
-backend/backend/xgboost_model.json
+backend/xgboost_model.json
