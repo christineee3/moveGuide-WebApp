@@ -10,21 +10,21 @@ Deployment of a House price prediction model in a web application moveGuide FYP 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/christinee3/moveGuide-WebApp.git
+   git clone https://github.com/christineee3/moveGuide-WebApp.git
+
 2. Setup backend
     ```bash
-    cd /backend
+    cd backend
     python -m venv .venv
     source .venv/bin/activate  # On Windows: .venv\Scripts\activate
     pip install -r requirements.txt
     python app.py
     
-note: The XGboost model will begin downloading when the backend starts, the app will not will not function until this is complete.  
-
+note: The XGboost model will take a moment to download when the backend starts, the app will not will not function until this is complete.  
 
 3. Setup frontend
    ```bash
-   cd /frontend
+   cd frontend
    npm install
    npm run serve
 
